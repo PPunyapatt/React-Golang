@@ -21,30 +21,30 @@ func NewAuthService(userRepo core.UserRepository) *AuthService {
 	return &AuthService{userRepo: userRepo}
 }
 
-func (svc *AuthService) Login(c echo.Context, u *core.User) error {
+func (svc *AuthService) Login(c echo.Context, u *core.User) (*core.User, error) {
 
 	user, err := svc.userRepo.GetUserName(u.Username)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Validate username and password
 	fmt.Println("u.Username: ", u.Username, "\nuser.Ussername: ", user.Username)
 	if u.Username != user.Username {
-		return errors.New("username is invalid")
+		return nil, errors.New("username is invalid")
 	}
 
 	fmt.Println("u.Password: ", u.Password, "\nuser.password: ", user.Password)
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(u.Password)); err != nil {
-		return errors.New("password is invalid")
+		return nil, errors.New("password is invalid")
 	}
 
 	err_tkn := jwt_tkn.GenerateTokensAndSetCookies(user, c)
 	if err_tkn != nil {
-		return echo.NewHTTPError(http.StatusUnauthorized, err_tkn)
+		return nil, echo.NewHTTPError(http.StatusUnauthorized, err_tkn)
 	}
 
-	return nil
+	return user, nil
 }
 
 func (svc *AuthService) Logout(c echo.Context) error {

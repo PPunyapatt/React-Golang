@@ -6,6 +6,7 @@ import (
 
 	"errors"
 
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -24,8 +25,8 @@ func (u *UserRepoDB) GetUserName(username string) (*core.User, error) {
 		return user, res.Error
 	}
 	fmt.Println("raw password: ", user.Password)
-	// hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(user.Password), 8)
-	// user.Password = string(hashedPassword)
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(user.Password), 8)
+	user.Password = string(hashedPassword)
 	fmt.Println("res: ", user)
 	return user, nil
 }

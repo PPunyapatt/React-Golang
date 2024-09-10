@@ -5,6 +5,6 @@ import (
 )
 
 type AuthService interface {
-	Login(c echo.Context, user *User) error
+	Login(c echo.Context, user *User) (*User, error)
 	Logout(c echo.Context) error
 }

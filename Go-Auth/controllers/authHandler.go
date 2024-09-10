@@ -23,17 +23,20 @@ func (ah *AuthHandler) Login(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
-	err := ah.svc.Login(c, u)
+	user, err := ah.svc.Login(c, u)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusUnauthorized, err)
 	}
 	return c.JSON(http.StatusOK, echo.Map{
-		"Login": "Success",
+		"data": map[string]interface{}{
+			"Id":       user.Id,
+			"Username": user.Username,
+		},
 	})
 }
 
 func (ah *AuthHandler) Logout(c echo.Context) error {
-	if err := ah.Logout(c); err != nil {
+	if err := ah.svc.Logout(c); err != nil {
 		return echo.NewHTTPError(http.StatusUnauthorized, err)
 	}
 	return nil
