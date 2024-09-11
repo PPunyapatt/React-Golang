@@ -4,85 +4,60 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
+import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ShareIcon from '@mui/icons-material/Share';
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
+import moment from 'moment';
+import { useAuth } from "../context/AuthProvider"
 
-import ResponsiveAppBar from "./header"
-
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
+interface RecipeData {
+  Title: string;
+  Body: string;
+  Create_at: string; // Change to Date if needed
 }
 
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme }) => ({
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-  variants: [
-    {
-      props: ({ expand }) => !expand,
-      style: {
-        transform: 'rotate(0deg)',
-      },
-    },
-    {
-      props: ({ expand }) => !!expand,
-      style: {
-        transform: 'rotate(180deg)',
-      },
-    },
-  ],
-}));
+interface RecipeReviewCardProps {
+  data: RecipeData;
+}
 
-export default function RecipeReviewCard() {
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
+export default function RecipeReviewCard({ data }: RecipeReviewCardProps) {
+  const auth = useAuth();
   return (
     <>
-        <Card sx={{ maxWidth: 345 }}>
-        <CardHeader
+      <Card sx={{ maxWidth: 345 }}>
+        <CardActionArea onClick={() => {
+          console.log("card click");
+
+        }}>
+          <CardHeader
             avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
-            </Avatar>
+              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                {auth.username[0]}
+              </Avatar>
             }
-            action={
-            <IconButton aria-label="settings">
-                {/* <MoreVertIcon /> */}
-            </IconButton>
-            }
-            title="Shrimp and Chorizo Paella"
-            subheader="September 14, 2016"
-        />
-        <CardMedia
+            title={data.Title}
+            subheader={moment(data.Create_at).format("YYYY-MM-DD")}
+          />
+          <CardMedia
             component="img"
             height="194"
-            image="https://i.natgeofe.com/n/e7e3ebe9-4f5e-4ae7-9714-549f2b5a3700/NationalGeographic_2728116_2x1.jpg"
+            image="https://random-image-pepebigotes.vercel.app/api/random-image"
             alt="Paella dish"
-        />
-        <CardContent>
+          />
+          <CardContent>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            This impressive paella is a perfect party dish and a fun meal to cook
-            together with your guests. Add 1 cup of frozen peas along with the mussels,
-            if you like.
+              {/* This impressive paella is a perfect party dish and a fun meal to cook
+              together with your guests. Add 1 cup of frozen peas along with the mussels,
+              if you like. */}
+              { data.Body }
             </Typography>
-        </CardContent>
-        </Card>
+          </CardContent>
+        </CardActionArea>
+      </Card>
     </>
   );
 }

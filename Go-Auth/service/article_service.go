@@ -1,6 +1,9 @@
 package service
 
-import "goAuth/core"
+import (
+	"fmt"
+	"goAuth/core"
+)
 
 type ArticleService struct {
 	svc core.ArticleRepository
@@ -28,6 +31,7 @@ func (as *ArticleService) GetMyPost(user_id int) ([]*core.Article, error) {
 
 func (as *ArticleService) GetAllPost() ([]*core.Article, error) {
 	allPost, err := as.svc.GetAll()
+	fmt.Println("allPost: ", allPost)
 	if err != nil {
 		return nil, err
 	}

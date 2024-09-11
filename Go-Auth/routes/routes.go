@@ -47,8 +47,11 @@ func Setup(
 
 	// Get article
 	user.GET("/allpost", articleHandler.GetAllPost)
-	user.GET("/mypost", articleHandler.GetMyPost)
+	user.GET("/mypost/:user_id", articleHandler.GetMyPost)
 	user.GET("/getpost", articleHandler.GetPostByID)
 
-	user.GET("", controllers.Admin())
+	// Check token expire
+	user.GET("/auth_check", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Token is valid")
+	})
 }

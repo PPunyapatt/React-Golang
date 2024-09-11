@@ -47,10 +47,10 @@ func (ah *ArticleHandler) GetMyPost(c echo.Context) error {
 }
 
 func (ah *ArticleHandler) GetAllPost(c echo.Context) error {
-	articles, err := ah.svc.GetAllPost()
+	article, err := ah.svc.GetAllPost()
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
-	return echo.NewHTTPError(http.StatusOK, articles)
+	return echo.NewHTTPError(http.StatusOK, article)
 }

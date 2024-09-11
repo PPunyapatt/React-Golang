@@ -5,51 +5,31 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme } from '@mui/material/styles';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import Fade from "@mui/material/Fade";
-import bcrypt from 'bcryptjs'
-import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import {
-  submit,
-  test_admin
-} from "../api/bind_api";
-// import '../App.css'
-
-import ResponsiveAppBar from "../components/header"
+import { useAuth } from "../context/AuthProvider"
 
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+
+
 
 export default function SignIn() {
-  const [value, setValue] = useState("Change me");
+  // const [value, setValue] = useState("Change me");
   const [showAlert, setShowAlert] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies([]);
 
   const navigate = useNavigate();
-
+  const auth = useAuth();
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log("Password: ", data.get('password'));
+
+    let status = await auth.loginAction(data)
     
-    console.log({
-      email: data.get('username'),
-      password: data.get('password')
-    });
-    let rsp = await submit(String(data.get('username')), String(data.get('password')))
-    console.log('rsp: ', rsp);
-    
-    if (rsp.status == 200) {
-      console.log('access-token: ', cookies);
-      navigate('/blog')
-      
-      let rsp_admin = await test_admin()
-      console.log('rsp_admin: ', rsp_admin);   
+    if (status == 200) {
+      navigate('/blog') 
     }
     else {
       setShowAlert(true)
@@ -66,10 +46,10 @@ export default function SignIn() {
     }
   }, [showAlert]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //console.log('event: ', event.currentTarget);
-    setValue(event.currentTarget.value);
-  }
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   //console.log('event: ', event.currentTarget);
+  //   setValue(event.currentTarget.value);
+  // }
 
 
   return (
@@ -98,7 +78,7 @@ export default function SignIn() {
               name="username"
               autoComplete="username"
               autoFocus
-              onChange={handleChange}
+              // onChange={handleChange}
             />
             <TextField
               margin="normal"

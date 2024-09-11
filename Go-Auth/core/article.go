@@ -1,11 +1,11 @@
 package core
 
 type Article struct {
-	id        int
-	user_id   int
-	body      string
-	title     string
-	create_at string
+	Id        int
+	User_id   int
+	Body      string
+	Title     string
+	Create_at string
 }
 
 type ArticleRepository interface {
