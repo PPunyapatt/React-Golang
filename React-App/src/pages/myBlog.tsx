@@ -4,20 +4,24 @@ import { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import {
-    allpost
+    mypost
 } from "../api/bind_api"
+import { useAuth } from "../context/AuthProvider";
 
-export default function AllBlog() {
+export default function MyBlog() {
     const [data, setData] = useState([]);
+    const auth = useAuth()
 
-    const allPost = async () => {
-        let rsp = await allpost()
+    const myPost = async () => {
+        console.log("MyPost");
+        
+        let rsp = await mypost(auth.id)
         const res = await rsp.json();
         setData(res)     
     }
 
     useEffect(() => {
-        allPost()
+        myPost()
       }, []);
     return (
         <>

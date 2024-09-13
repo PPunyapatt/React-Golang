@@ -12,6 +12,8 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+
 import { useAuth } from "../context/AuthProvider"
 
 interface RecipeData {
@@ -25,14 +27,12 @@ interface RecipeReviewCardProps {
 }
 
 export default function RecipeReviewCard({ data }: RecipeReviewCardProps) {
+  const navigate = useNavigate();
   const auth = useAuth();
   return (
     <>
       <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea onClick={() => {
-          console.log("card click");
-
-        }}>
+        <CardActionArea onClick={() => {}}>
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -48,12 +48,16 @@ export default function RecipeReviewCard({ data }: RecipeReviewCardProps) {
             image="https://random-image-pepebigotes.vercel.app/api/random-image"
             alt="Paella dish"
           />
-          <CardContent>
+          <CardContent
+            sx={{
+              maxWidth: '400px', // Set max width
+              // maxHeight: '100px', // Set max height
+              // minHeight: '100px', // Set max height
+              overflow: 'auto',   // Add scrollbars if content exceeds max height
+              height: '100px'
+            }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {/* This impressive paella is a perfect party dish and a fun meal to cook
-              together with your guests. Add 1 cup of frozen peas along with the mussels,
-              if you like. */}
-              { data.Body }
+              { data.Body.length > 158 ? data.Body.slice(0, 190) + ' ...' : data.Body }
             </Typography>
           </CardContent>
         </CardActionArea>

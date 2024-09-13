@@ -39,7 +39,7 @@ func GenerateTokensAndSetCookies(user *core.User, c echo.Context) error {
 }
 
 func generateAccessToken(user *core.User) (string, time.Time, error) {
-	expirationTime := time.Now().Add(5 * time.Second)
+	expirationTime := time.Now().Add(5 * time.Minute)
 	return generateToken(user, expirationTime, []byte(GetJWTSecret()))
 }
 
