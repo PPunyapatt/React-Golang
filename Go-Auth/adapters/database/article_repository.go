@@ -42,3 +42,11 @@ func (ar *ArticleRepoDB) GetAll() ([]*core.Article, error) {
 	}
 	return article, nil
 }
+
+func (ar *ArticleRepoDB) Create(article *core.Article) error {
+	res := ar.db.Create(&article)
+	if res.Error != nil {
+		return res.Error
+	}
+	return nil
+}

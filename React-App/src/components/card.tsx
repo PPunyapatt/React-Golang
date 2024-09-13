@@ -39,6 +39,9 @@ export default function RecipeReviewCard({ data }: RecipeReviewCardProps) {
                 {auth.username[0]}
               </Avatar>
             }
+            sx={{
+              maxHeight: '40px'
+            }}
             title={data.Title}
             subheader={moment(data.Create_at).format("YYYY-MM-DD")}
           />

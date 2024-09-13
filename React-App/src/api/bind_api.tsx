@@ -59,3 +59,18 @@ export const authCheck = async () => {
     })
     return rsp
 };
+
+export const createPost = async (user_id: number , title: string, body: string) => {
+    const response = await fetch('http://localhost:8777/user/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+            User_id: user_id,
+            Title: title,
+            Body: body
+        })
+    });
+
+    return response
+};

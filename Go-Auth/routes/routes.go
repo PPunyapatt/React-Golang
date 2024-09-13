@@ -50,6 +50,9 @@ func Setup(
 	user.GET("/mypost/:user_id", articleHandler.GetMyPost)
 	user.GET("/getpost", articleHandler.GetPostByID)
 
+	// Create article
+	user.POST("/create", articleHandler.CreatePost)
+
 	// Check token expire
 	user.GET("/auth_check", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Token is valid")

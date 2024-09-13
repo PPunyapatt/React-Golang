@@ -6,18 +6,29 @@ import Grid from '@mui/material/Grid';
 import {
     mypost
 } from "../api/bind_api"
-import { useAuth } from "../context/AuthProvider";
+// import { useAuth } from "../context/AuthProvider";
+
+interface AuthData {
+    username: string;
+    id: number;
+}
 
 export default function MyBlog() {
     const [data, setData] = useState([]);
-    const auth = useAuth()
+    // const auth = useAuth()
+    const auth = localStorage.getItem('auth')
+    const auth_local: AuthData | null = auth ? JSON.parse(auth) : null;
 
     const myPost = async () => {
-        console.log("MyPost");
-        
-        let rsp = await mypost(auth.id)
-        const res = await rsp.json();
-        setData(res)     
+        if (auth_local && typeof auth_local.id === 'number') {
+            console.log('auth myblog: ', auth_local);
+
+            let rsp = await mypost(auth_local.id);
+            const res = await rsp.json();
+            setData(res);
+        } else {
+            console.error('No valid authentication data found.');
+        }    
     }
 
     useEffect(() => {

@@ -4,6 +4,7 @@ import (
 	"goAuth/core"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
@@ -53,4 +54,18 @@ func (ah *ArticleHandler) GetAllPost(c echo.Context) error {
 	}
 
 	return echo.NewHTTPError(http.StatusOK, article)
+}
+
+func (ah *ArticleHandler) CreatePost(c echo.Context) error {
+	var article *core.Article
+	if err := c.Bind(&article); err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	article.Create_at = time.Now()
+
+	err := ah.svc.CreatePost(article)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	return nil
 }

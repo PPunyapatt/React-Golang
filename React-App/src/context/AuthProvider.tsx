@@ -17,7 +17,12 @@ const initialValue = {
 
 interface AuthProviderProps {
     children: ReactNode; // React elements passed as children
-  }
+}
+
+interface AuthData {
+    username: string;
+    id: number;
+} 
   
 
 const AuthContext = createContext<AuthContextType>(initialValue);
@@ -37,6 +42,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             ['username']: user.Username,
             ['id']: user.Id
         });
+        const authData: AuthData = {
+            username: user.Username,
+            id: user.Id
+        };
+        localStorage.setItem('auth', JSON.stringify(authData));
         return rsp.status
     }
 

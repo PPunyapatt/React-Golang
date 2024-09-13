@@ -35,3 +35,11 @@ func (as *ArticleService) GetAllPost() ([]*core.Article, error) {
 	}
 	return allPost, nil
 }
+
+func (as *ArticleService) CreatePost(article *core.Article) error {
+	err := as.svc.Create(article)
+	if err != nil {
+		return err
+	}
+	return nil
+}

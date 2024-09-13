@@ -11,9 +11,15 @@ export default function AllBlog() {
     const [data, setData] = useState([]);
 
     const allPost = async () => {
-        let rsp = await allpost()
-        const res = await rsp.json();
-        setData(res)     
+        try {
+            let rsp = await allpost()
+            const res = await rsp.json();
+            setData(res)
+        }
+        catch (err) {
+            console.log(err);
+            
+        }    
     }
 
     useEffect(() => {
@@ -22,7 +28,7 @@ export default function AllBlog() {
     return (
         <>
             <ResponsiveAppBar />
-            <Container maxWidth="lg" sx={{ marginTop: 6 }}>
+            <Container maxWidth="lg" sx={{ marginTop: 6, padding: 4 }}>
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {data.map((item, idx) => (
                         <Grid item xs={2} sm={1} md={4} key={idx}>
