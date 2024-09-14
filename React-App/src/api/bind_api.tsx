@@ -27,6 +27,16 @@ export const signup = async (username: string , hash_password: string) => {
     return response
 };
 
+export const signout = async () => {
+    const response = await fetch('http://localhost:8777/user/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+    });
+
+    return response
+};
+
 export const test_admin = async () => {
     const rsp = await fetch('http://localhost:8777/admin', {
         headers: {'Content-Type': 'application/json'},

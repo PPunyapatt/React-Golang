@@ -32,10 +32,14 @@ const StoryInput = styled(TextField)({
     },
 });
 
-
+interface Auth {
+    username: string;
+    id: number;
+}
 
 function WriteBlog() {
-    const auth = useAuth()
+    const storedAuth = localStorage.getItem('auth');
+    const auth: Auth | null = storedAuth ? JSON.parse(storedAuth) : null;
     const navigate = useNavigate();
     const [content, setContent] = useState({
         title: '',
@@ -50,12 +54,14 @@ function WriteBlog() {
     };
 
     const handleSave = async () => {
-        let rsp = await createPost(auth.id, content.title, content.body)
-        console.log("rsp create post: ", rsp);
-        
-        // if (rsp.status == 200) {
-        //     navigate('/myblog')
-        // }
+        if (auth) {
+            let rsp = await createPost(auth.id, content.title, content.body)
+            console.log("rsp create post: ", rsp);
+            if (rsp.status == 200) navigate('/myblog')
+        }
+        else {
+            console.error("auth is null");
+        }
     }
     return (
         <>

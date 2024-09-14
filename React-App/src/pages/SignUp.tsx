@@ -5,16 +5,12 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme } from '@mui/material/styles';
-import bcrypt from 'bcryptjs'
-import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 import {
   signup
 } from "../api/bind_api";
 
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
 
 export default function SignUp() {
   const [values, setValues] = useState({
@@ -27,10 +23,9 @@ export default function SignUp() {
     password: false,
     cf_password: false
   });
-
   const [passwordsMatch, setPasswordsMatch] = useState(false);
   const [disable, setDisable] = useState(false)
-  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,12 +36,11 @@ export default function SignUp() {
     }
     console.log({
       email: data.get('username'),
-      password: bcrypt.hashSync(String(data.get('password')), 8)
+      password: data.get('password')
     });
 
-    let hash_password = bcrypt.hashSync(String(data.get('password')), 8);
-    let rsp = await signup(String(data.get('username')), hash_password)
-    console.log('rsp: ', rsp);
+    let rsp = await signup(String(data.get('username')), String(data.get('password')))
+    if (rsp.status === 200) navigate('/')
   };
 
   const validateForm = () => {

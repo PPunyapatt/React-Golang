@@ -19,7 +19,8 @@ import { useAuth } from "../context/AuthProvider"
 interface RecipeData {
   Title: string;
   Body: string;
-  Create_at: string; // Change to Date if needed
+  Create_at: string;
+  Username: string; // Change to Date if needed
 }
 
 interface RecipeReviewCardProps {
@@ -36,13 +37,13 @@ export default function RecipeReviewCard({ data }: RecipeReviewCardProps) {
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {auth.username[0]}
+                {data.Username[0]}
               </Avatar>
             }
             sx={{
               maxHeight: '40px'
             }}
-            title={data.Title}
+            title={data.Title.length > 80 ? data.Title.slice(0, 50) + ". . ." : data.Title }
             subheader={moment(data.Create_at).format("YYYY-MM-DD")}
           />
           <CardMedia

@@ -12,10 +12,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
-// import AdbIcon from '@mui/icons-material/Adb';
+import {
+  signout
+} from "../api/bind_api"
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Write', 'Logout'];
+const pages = ['Blog'];
+const settings = ['My blog', 'Write', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -38,12 +40,15 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (setting: string) => () => {
+  const handleCloseUserMenu = (setting: string) => async () => {
     console.log('setting: ', setting);
     if (setting === "Write") {
       navigate('/new-story')
-    } else if (setting === "Profile") {
+    } else if (setting === "My blog") {
       navigate('/myblog')
+    } else if (setting === "Logout") {
+      let rsp = await signout()
+      if (rsp.status === 200) navigate('/')
     }
 
     setAnchorElUser(null);
