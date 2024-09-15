@@ -48,7 +48,7 @@ func Setup(
 	// Get article
 	user.GET("/allpost", articleHandler.GetAllPost)
 	user.GET("/mypost/:user_id", articleHandler.GetMyPost)
-	user.GET("/getpost", articleHandler.GetPostByID)
+	user.GET("/getpost/:id", articleHandler.GetPostByID)
 
 	// Create article
 	user.POST("/create", articleHandler.CreatePost)

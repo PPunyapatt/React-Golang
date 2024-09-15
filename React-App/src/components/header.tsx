@@ -18,16 +18,23 @@ import {
 
 const pages = ['Blog'];
 const settings = ['My blog', 'Write', 'Logout'];
+interface Auth {
+  username: string;
+  id: number;
+}
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const storedAuth = localStorage.getItem('auth');
+  const auth: Auth | null = storedAuth ? JSON.parse(storedAuth) : null;
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    console.log("event.currentTarget: ", event.currentTarget);
     setAnchorElUser(event.currentTarget);
   };
 
@@ -40,7 +47,7 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = (setting: string) => async () => {
+  const handleCloseUserMenu = (setting: string | null) => async () => {
     console.log('setting: ', setting);
     if (setting === "Write") {
       navigate('/new-story')
@@ -145,7 +152,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={auth?.username} src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -162,7 +169,7 @@ function ResponsiveAppBar() {
                 horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
-              // onClose={handleCloseUserMenu}
+              onClose={handleCloseUserMenu(null)}
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu(setting)}>

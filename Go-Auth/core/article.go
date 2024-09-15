@@ -20,7 +20,7 @@ type ArticleResult struct {
 }
 
 type ArticleRepository interface {
-	GetByID(id int) (*Article, error)
+	GetByID(id int) (*ArticleResult, error)
 	GetByUserID(user_id int) ([]*ArticleResult, error)
 	GetAll() ([]*ArticleResult, error)
 	Create(article *Article) error
@@ -29,7 +29,7 @@ type ArticleRepository interface {
 }
 
 type ArticleService interface {
-	GetPostByID(id int) (*Article, error)
+	GetPostByID(id int) (*ArticleResult, error)
 	GetMyPost(user_id int) ([]*ArticleResult, error)
 	GetAllPost() ([]*ArticleResult, error)
 	CreatePost(article *Article) error

@@ -6,6 +6,7 @@ import AllBlog from "./pages/allBlog";
 import WriteBlog from "./pages/newStory";
 import AuthProvider from "./context/AuthProvider";
 import PrivateRoute from "./context/PrivateRoute"
+import Content from "./pages/content";
 import './App.css';
 import MyBlog from "./pages/myBlog";
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/blog" element={<AllBlog />} />
             <Route path="/new-story" element={<WriteBlog />} />
             <Route path="/myblog" element={<MyBlog />} />
+            <Route path="/content" element={<Content />} />
           </Route>
         </Routes>
       </AuthProvider>

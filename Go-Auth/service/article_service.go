@@ -12,7 +12,7 @@ func NewArticleService(svc core.ArticleRepository) *ArticleService {
 	return &ArticleService{svc: svc}
 }
 
-func (as *ArticleService) GetPostByID(id int) (*core.Article, error) {
+func (as *ArticleService) GetPostByID(id int) (*core.ArticleResult, error) {
 	post, err := as.svc.GetByID(id)
 	if err != nil {
 		return nil, err

@@ -62,16 +62,16 @@ export const allpost = async () => {
     return rsp
 };
 
-export const authCheck = async () => {
-    const rsp = await fetch(`http://localhost:8777/user/auth_check`, {
+export const getpost = async (id: number) => {
+    const rsp = await fetch(`http://localhost:8777/user/getpost/${id}`, {
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
     })
     return rsp
-};
+}
 
 export const createPost = async (user_id: number , title: string, body: string) => {
-    const response = await fetch('http://localhost:8777/user/create', {
+    const rsp = await fetch('http://localhost:8777/user/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -81,6 +81,26 @@ export const createPost = async (user_id: number , title: string, body: string) 
             Body: body
         })
     });
-
-    return response
+    return rsp
 };
+
+export const deletePost = async () => {
+    const rsp = await fetch('http://localhost:8777/user/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+    });
+    return rsp
+};
+
+export const authCheck = async () => {
+    const rsp = await fetch(`http://localhost:8777/user/auth_check`, {
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+    })
+    return rsp
+};
+
+
+
+

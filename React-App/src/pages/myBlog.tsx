@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import {
     mypost
 } from "../api/bind_api"
+import ResponsiveDialog from "../components/dialog"
 // import { useAuth } from "../context/AuthProvider";
 
 interface Auth {
@@ -15,7 +16,7 @@ interface Auth {
 
 export default function MyBlog() {
     const [data, setData] = useState([]);
-    // const auth = useAuth()
+    const [dialog, setDialog] = useState(false);
     const storedAuth = localStorage.getItem('auth');
     const auth: Auth | null = storedAuth ? JSON.parse(storedAuth) : null;
 
@@ -29,24 +30,32 @@ export default function MyBlog() {
         }    
     }
 
+    const handleDelete = () => {
+        setDialog(true)
+    }
+
     useEffect(() => {
         myPost()
       }, []);
     return (
         <>
             <ResponsiveAppBar />
-            
             <Container maxWidth="lg" sx={{ marginTop: 6, marginBottom: 4 }}>
                 <h1 style={{marginBottom: '20px', marginTop: '10px'}}>{auth?.username}</h1>
                 <hr style={{marginBottom: '30px'}} />
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {data.map((item, idx) => (
                         <Grid item xs={2} sm={1} md={4} key={idx}>
-                            <RecipeReviewCard data={item}/>
+                            <RecipeReviewCard data={item} auth={auth} onDelChange={handleDelete}/>
                         </Grid>
                     ))}
                 </Grid>
             </Container>
+            {
+                dialog &&
+                <ResponsiveDialog/>
+            }
+            
         </>
     )
 }
