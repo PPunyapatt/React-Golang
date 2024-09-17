@@ -22,6 +22,10 @@ func DatabaseInit() {
 	}
 }
 
+func AutoMigtare(model interface{}) {
+	database.AutoMigrate(model)
+}
+
 func DB() *gorm.DB {
 	return database
 }

@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import {
     allpost
 } from "../api/bind_api"
+import ResponsiveDialog from "../components/dialog"
 
 interface Auth {
     username: string;
@@ -14,6 +15,7 @@ interface Auth {
 
 export default function AllBlog() {
     const [data, setData] = useState([]);
+    const [dialog, setDialog] = useState(false);
     const storedAuth = localStorage.getItem('auth');
     const auth: Auth | null = storedAuth ? JSON.parse(storedAuth) : null;
 
@@ -24,9 +26,12 @@ export default function AllBlog() {
             setData(res)
         }
         catch (err) {
-            console.log(err);
-            
+            console.log(err);  
         }    
+    }
+
+    const handleDelete = () => {
+        setDialog(dialog ? false : true)
     }
 
     useEffect(() => {
@@ -39,11 +44,15 @@ export default function AllBlog() {
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {data.map((item, idx) => (
                         <Grid item xs={2} sm={1} md={4} key={idx}>
-                            <RecipeReviewCard data={item} auth={auth}/>
+                            <RecipeReviewCard data={item} auth={auth} onDelChange={handleDelete}/>
                         </Grid>
                     ))}
                 </Grid>
             </Container>
+            {
+                dialog &&
+                <ResponsiveDialog onDelChange={handleDelete}/>
+            }
         </>
     )
 }

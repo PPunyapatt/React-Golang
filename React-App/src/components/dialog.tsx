@@ -8,7 +8,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-export default function ResponsiveDialog() {
+interface RecipeReviewCardProps {
+  onDelChange: (diag: boolean) => void;
+}
+
+export default function ResponsiveDialog({onDelChange} : RecipeReviewCardProps) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -18,7 +22,8 @@ export default function ResponsiveDialog() {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    // setOpen(false);
+    onDelChange(false)
   };
 
   return (

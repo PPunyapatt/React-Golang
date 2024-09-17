@@ -62,7 +62,7 @@ export default function RecipeReviewCard({ data, auth, onDelChange }: RecipeRevi
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              {data.Username[0]}
+              {data?.Username[0]}
             </Avatar>
           }
           sx={{

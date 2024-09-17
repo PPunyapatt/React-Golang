@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"goAuth/core"
 
 	"gorm.io/gorm"
@@ -14,8 +15,8 @@ func NewArticleRepoDB(db *gorm.DB) *ArticleRepoDB {
 	return &ArticleRepoDB{db: db}
 }
 
-func (ar *ArticleRepoDB) GetByID(id int) (*core.ArticleResult, error) {
-	var article *core.ArticleResult
+func (ar *ArticleRepoDB) GetByID(id int) (*core.Article, error) {
+	var article *core.Article
 	res := ar.db.Table("articles").
 		Joins("left join users on articles.user_id = users.id").
 		Select("articles.id, articles.user_id, articles.title, articles.body, articles.create_at, users.username").
@@ -27,8 +28,8 @@ func (ar *ArticleRepoDB) GetByID(id int) (*core.ArticleResult, error) {
 	return article, nil
 }
 
-func (ar *ArticleRepoDB) GetByUserID(user_id int) ([]*core.ArticleResult, error) {
-	var articles []*core.ArticleResult
+func (ar *ArticleRepoDB) GetByUserID(user_id int) ([]*core.Article, error) {
+	var articles []*core.Article
 	// res := ar.db.Find(&article, "user_id = ?", user_id)
 	res := ar.db.Table("articles").
 		Joins("left join users on articles.user_id = users.id").
@@ -40,13 +41,14 @@ func (ar *ArticleRepoDB) GetByUserID(user_id int) ([]*core.ArticleResult, error)
 	return articles, nil
 }
 
-func (ar *ArticleRepoDB) GetAll() ([]*core.ArticleResult, error) {
-	var articles []*core.ArticleResult
+func (ar *ArticleRepoDB) GetAll() ([]*core.Article, error) {
+	var articles []*core.Article
 	// res := ar.db.Find(&article)
 	res := ar.db.Table("articles").
 		Joins("left join users on articles.user_id = users.id").
 		Select("articles.id, articles.user_id, articles.title, articles.body, articles.create_at, users.username").
 		Scan(&articles)
+	fmt.Println("articles: ", articles[0])
 	if res.Error != nil {
 		return nil, res.Error
 	}

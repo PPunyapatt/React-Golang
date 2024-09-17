@@ -13,6 +13,8 @@ import (
 func main() {
 	e := echo.New()
 	config.DatabaseInit()
+	// config.AutoMigtare(&core.User{})
+	// config.AutoMigtare(&core.ArticleMigrate{})
 
 	// User
 	userRepo := database.NewUserRepoDB(config.DB())

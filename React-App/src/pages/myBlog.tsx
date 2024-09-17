@@ -24,14 +24,15 @@ export default function MyBlog() {
         if (auth) {
             let rsp = await mypost(auth.id);
             const res = await rsp.json();
-            setData(res);
+            if (res != null) setData(res);
+            
         } else {
             console.error('No valid authentication data found.');
         }    
     }
 
     const handleDelete = () => {
-        setDialog(true)
+        setDialog(dialog ? false : true)
     }
 
     useEffect(() => {
@@ -47,13 +48,14 @@ export default function MyBlog() {
                     {data.map((item, idx) => (
                         <Grid item xs={2} sm={1} md={4} key={idx}>
                             <RecipeReviewCard data={item} auth={auth} onDelChange={handleDelete}/>
+                            {/* <RecipeReviewCard data={item} auth={auth} /> */}
                         </Grid>
                     ))}
                 </Grid>
             </Container>
             {
                 dialog &&
-                <ResponsiveDialog/>
+                <ResponsiveDialog onDelChange={handleDelete}/>
             }
             
         </>
