@@ -53,6 +53,9 @@ func Setup(
 	// Create article
 	user.POST("/create", articleHandler.CreatePost)
 
+	// Delete article
+	user.DELETE("/deletepost/:id", articleHandler.DeletePost)
+
 	// Check token expire
 	user.GET("/auth_check", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Token is valid")

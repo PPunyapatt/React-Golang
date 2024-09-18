@@ -15,6 +15,9 @@ import { useNavigate } from 'react-router-dom';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
+import {
+  deletePost
+} from "../api/bind_api"
 
 interface RecipeData {
   Title: string;
@@ -44,10 +47,16 @@ export default function RecipeReviewCard({ data, auth, onDelChange }: RecipeRevi
     setAnchorElUser(event.currentTarget)
   }
 
-  const handleCloseUserMenu = (setting: string | null) => () => {
+  const handleDeletePost = async () => {
+    let rsp = await deletePost(data.Id)
+    return rsp.status == 200 ? true : false
+  }
+
+  const handleCloseUserMenu = (setting: string | null) => async () => {
     console.log("close: ", setting);
     if (setting === "Delete") {
-      onDelChange(true)
+      let del = await handleDeletePost()
+      onDelChange(del)
     }
     setAnchorElUser(null);
   }

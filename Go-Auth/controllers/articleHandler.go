@@ -69,3 +69,18 @@ func (ah *ArticleHandler) CreatePost(c echo.Context) error {
 	}
 	return nil
 }
+
+func (ah *ArticleHandler) DeletePost(c echo.Context) error {
+	num := c.Param("id")
+	id, err := strconv.Atoi(num)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+
+	err_del := ah.svc.DeletePost(id)
+	if err_del != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+
+	return nil
+}

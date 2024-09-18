@@ -62,3 +62,12 @@ func (ar *ArticleRepoDB) Create(article *core.Article) error {
 	}
 	return nil
 }
+
+func (ar *ArticleRepoDB) Delete(id int) error {
+	res := ar.db.Delete(&core.Article{}, id)
+
+	if res.Error != nil {
+		return res.Error
+	}
+	return nil
+}

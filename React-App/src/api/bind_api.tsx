@@ -84,9 +84,9 @@ export const createPost = async (user_id: number , title: string, body: string) 
     return rsp
 };
 
-export const deletePost = async () => {
-    const rsp = await fetch('http://localhost:8777/user/create', {
-        method: 'POST',
+export const deletePost = async (id: number) => {
+    const rsp = await fetch(`http://localhost:8777/user/deletepost/${id}`, {
+        method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
     });

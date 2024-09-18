@@ -25,7 +25,7 @@ type ArticleRepository interface {
 	GetAll() ([]*Article, error)
 	Create(article *Article) error
 	// Update(article *Article) error
-	// Delete(id int) error
+	Delete(id int) error
 }
 
 type ArticleService interface {
@@ -34,5 +34,5 @@ type ArticleService interface {
 	GetAllPost() ([]*Article, error)
 	CreatePost(article *Article) error
 	// UpdatePost(article *Article) error
-	// Delete(id int) error
+	DeletePost(id int) error
 }

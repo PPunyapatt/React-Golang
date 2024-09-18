@@ -43,3 +43,11 @@ func (as *ArticleService) CreatePost(article *core.Article) error {
 	}
 	return nil
 }
+
+func (as *ArticleService) DeletePost(id int) error {
+	err := as.svc.Delete(id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
