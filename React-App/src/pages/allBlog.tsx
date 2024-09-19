@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid';
 import {
     allpost
 } from "../api/bind_api"
-import ResponsiveDialog from "../components/dialog"
 
 interface Auth {
     username: string;
@@ -44,15 +43,11 @@ export default function AllBlog() {
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     {data.map((item, idx) => (
                         <Grid item xs={2} sm={1} md={4} key={idx}>
-                            <RecipeReviewCard data={item} auth={auth} onDelChange={handleDelete}/>
+                            <RecipeReviewCard data={item} auth={auth} onDelChange={handleDelete} page={'allBlog'}/>
                         </Grid>
                     ))}
                 </Grid>
             </Container>
-            {
-                dialog &&
-                <ResponsiveDialog onDelChange={handleDelete}/>
-            }
         </>
     )
 }

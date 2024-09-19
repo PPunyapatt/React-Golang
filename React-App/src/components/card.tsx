@@ -15,9 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
-import {
-  deletePost
-} from "../api/bind_api"
+
 
 interface RecipeData {
   Title: string;
@@ -35,28 +33,23 @@ interface AuthData {
 interface RecipeReviewCardProps {
   data: RecipeData;
   auth: AuthData | null;
-  onDelChange: (diag: boolean) => void;
+  onDelChange: (id: number) => void;
+  page?: string | null;
 }
 
 const settings = ['Delete'];
 
-export default function RecipeReviewCard({ data, auth, onDelChange }: RecipeReviewCardProps) {
+export default function RecipeReviewCard({ data, auth, onDelChange, page }: RecipeReviewCardProps) {
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
 
-  const handleDeletePost = async () => {
-    let rsp = await deletePost(data.Id)
-    return rsp.status == 200 ? true : false
-  }
-
   const handleCloseUserMenu = (setting: string | null) => async () => {
     console.log("close: ", setting);
     if (setting === "Delete") {
-      let del = await handleDeletePost()
-      onDelChange(del)
+      onDelChange(data.Id)
     }
     setAnchorElUser(null);
   }
@@ -78,7 +71,7 @@ export default function RecipeReviewCard({ data, auth, onDelChange }: RecipeRevi
             maxHeight: '40px',
           }}
           action={
-            (auth?.username === data.Username) &&
+            (auth?.username === data.Username && page != "allBlog") &&
             <Box>
               <IconButton
                 aria-label="settings"

@@ -1,57 +1,40 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 interface RecipeReviewCardProps {
-  onDelChange: (diag: boolean) => void;
+  open: boolean;
+  confirmChange: (diag: boolean) => void;
 }
 
-export default function ResponsiveDialog({onDelChange} : RecipeReviewCardProps) {
-  const [open, setOpen] = React.useState(false);
+export default function ResponsiveDialog({open, confirmChange} : RecipeReviewCardProps) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    // setOpen(false);
-    onDelChange(false)
+  const handleClose = (data: boolean) => () => {
+    confirmChange(data)
   };
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open responsive dialog
-      </Button>
       <Dialog
         fullScreen={fullScreen}
-        open={true}
+        open={open}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
-          {"Use Google's location service?"}
+          {"Are you sure you want to delete?"}
         </DialogTitle>
-        {/* <DialogContent>
-          <DialogContentText>
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent> */}
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Disagree
+          <Button autoFocus onClick={handleClose(false)}>
+            Cancel
           </Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button onClick={handleClose(true)} autoFocus>
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>

@@ -2,7 +2,7 @@ package core
 
 import "time"
 
-type Article struct {
+type ArticleDB struct {
 	Id        int
 	User_id   int
 	Body      string
@@ -11,7 +11,7 @@ type Article struct {
 	Username  string
 }
 
-type ArticleMigrate struct {
+type Article struct {
 	Id        int       `gorm:"primaryKey;autoIncrement"`
 	User_id   int       `gorm:"not null"`
 	Body      string    `gorm:"type:text;not null"`
@@ -20,18 +20,18 @@ type ArticleMigrate struct {
 }
 
 type ArticleRepository interface {
-	GetByID(id int) (*Article, error)
-	GetByUserID(user_id int) ([]*Article, error)
-	GetAll() ([]*Article, error)
+	GetByID(id int) (*ArticleDB, error)
+	GetByUserID(user_id int) ([]*ArticleDB, error)
+	GetAll() ([]*ArticleDB, error)
 	Create(article *Article) error
 	// Update(article *Article) error
 	Delete(id int) error
 }
 
 type ArticleService interface {
-	GetPostByID(id int) (*Article, error)
-	GetMyPost(user_id int) ([]*Article, error)
-	GetAllPost() ([]*Article, error)
+	GetPostByID(id int) (*ArticleDB, error)
+	GetMyPost(user_id int) ([]*ArticleDB, error)
+	GetAllPost() ([]*ArticleDB, error)
 	CreatePost(article *Article) error
 	// UpdatePost(article *Article) error
 	DeletePost(id int) error

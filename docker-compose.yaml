@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  go-backend:
+    build: ./Go-Auth
+    container_name: go-app
+    restart: unless-stopped
+    ports:
+      - 8777:8777
+    depends_on:
+      - mysql-db
+
+  react-web:
+    build: ./React-App
+    container_name: react-app
+    restart: unless-stopped
+    ports:
+      - 1024:1024
+    depends_on:
+      - go-backend
+
+  mysql-db:
+    image: mysql:latest
+    restart: always
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: "test"
+      MYSQL_DATABASE: "banking"
+    ports:
+      - 4444:3306
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/schema.sql

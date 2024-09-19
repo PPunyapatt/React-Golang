@@ -1,6 +1,6 @@
 
 export const submit = async (username: string , hash_password: string) => {
-    const response = await fetch('http://localhost:8777/user/login', {
+    const response = await fetch('/api/user/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -14,7 +14,7 @@ export const submit = async (username: string , hash_password: string) => {
 };
 
 export const signup = async (username: string , hash_password: string) => {
-    const response = await fetch('http://localhost:8777/user/signup', {
+    const response = await fetch('/api/user/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -28,7 +28,7 @@ export const signup = async (username: string , hash_password: string) => {
 };
 
 export const signout = async () => {
-    const response = await fetch('http://localhost:8777/user/logout', {
+    const response = await fetch('/api/user/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -38,16 +38,16 @@ export const signout = async () => {
 };
 
 export const test_admin = async () => {
-    const rsp = await fetch('http://localhost:8777/admin', {
+    const rsp = await fetch('/api/admin', {
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
     })
-    // const rsp = await fetch('http://localhost:8777/admin')
+    // const rsp = await fetch('/api/admin')
     return rsp
 };
 
 export const mypost = async (id: number) => {
-    const rsp = await fetch(`http://localhost:8777/user/mypost/${id}`, {
+    const rsp = await fetch(`/api/user/mypost/${id}`, {
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
     })
@@ -55,7 +55,7 @@ export const mypost = async (id: number) => {
 };
 
 export const allpost = async () => {
-    const rsp = await fetch(`http://localhost:8777/user/allpost`, {
+    const rsp = await fetch(`/api/user/allpost`, {
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
     })
@@ -63,7 +63,7 @@ export const allpost = async () => {
 };
 
 export const getpost = async (id: number) => {
-    const rsp = await fetch(`http://localhost:8777/user/getpost/${id}`, {
+    const rsp = await fetch(`/api/user/getpost/${id}`, {
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
     })
@@ -71,7 +71,7 @@ export const getpost = async (id: number) => {
 }
 
 export const createPost = async (user_id: number , title: string, body: string) => {
-    const rsp = await fetch('http://localhost:8777/user/create', {
+    const rsp = await fetch('/api/user/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -85,7 +85,7 @@ export const createPost = async (user_id: number , title: string, body: string) 
 };
 
 export const deletePost = async (id: number) => {
-    const rsp = await fetch(`http://localhost:8777/user/deletepost/${id}`, {
+    const rsp = await fetch(`/api/user/deletepost/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
@@ -94,7 +94,7 @@ export const deletePost = async (id: number) => {
 };
 
 export const authCheck = async () => {
-    const rsp = await fetch(`http://localhost:8777/user/auth_check`, {
+    const rsp = await fetch(`/api/user/auth_check`, {
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
     })

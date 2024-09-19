@@ -12,7 +12,7 @@ func NewArticleService(svc core.ArticleRepository) *ArticleService {
 	return &ArticleService{svc: svc}
 }
 
-func (as *ArticleService) GetPostByID(id int) (*core.Article, error) {
+func (as *ArticleService) GetPostByID(id int) (*core.ArticleDB, error) {
 	post, err := as.svc.GetByID(id)
 	if err != nil {
 		return nil, err
@@ -20,7 +20,7 @@ func (as *ArticleService) GetPostByID(id int) (*core.Article, error) {
 	return post, err
 }
 
-func (as *ArticleService) GetMyPost(user_id int) ([]*core.Article, error) {
+func (as *ArticleService) GetMyPost(user_id int) ([]*core.ArticleDB, error) {
 	myPost, err := as.svc.GetByUserID(user_id)
 	if err != nil {
 		return nil, err
@@ -28,7 +28,7 @@ func (as *ArticleService) GetMyPost(user_id int) ([]*core.Article, error) {
 	return myPost, nil
 }
 
-func (as *ArticleService) GetAllPost() ([]*core.Article, error) {
+func (as *ArticleService) GetAllPost() ([]*core.ArticleDB, error) {
 	allPost, err := as.svc.GetAll()
 	if err != nil {
 		return nil, err

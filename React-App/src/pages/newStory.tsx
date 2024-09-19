@@ -9,8 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import {
     createPost
 } from "../api/bind_api"
-import { useAuth } from "../context/AuthProvider";
-
 
 const TitleInput = styled(TextField)({
     '& .MuiInputBase-input': {

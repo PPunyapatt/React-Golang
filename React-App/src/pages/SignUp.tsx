@@ -24,7 +24,6 @@ export default function SignUp() {
     cf_password: false
   });
   const [passwordsMatch, setPasswordsMatch] = useState(false);
-  const [disable, setDisable] = useState(false)
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -130,7 +129,6 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={disable}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up

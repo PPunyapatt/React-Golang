@@ -15,8 +15,8 @@ func NewArticleRepoDB(db *gorm.DB) *ArticleRepoDB {
 	return &ArticleRepoDB{db: db}
 }
 
-func (ar *ArticleRepoDB) GetByID(id int) (*core.Article, error) {
-	var article *core.Article
+func (ar *ArticleRepoDB) GetByID(id int) (*core.ArticleDB, error) {
+	var article *core.ArticleDB
 	res := ar.db.Table("articles").
 		Joins("left join users on articles.user_id = users.id").
 		Select("articles.id, articles.user_id, articles.title, articles.body, articles.create_at, users.username").
@@ -28,8 +28,8 @@ func (ar *ArticleRepoDB) GetByID(id int) (*core.Article, error) {
 	return article, nil
 }
 
-func (ar *ArticleRepoDB) GetByUserID(user_id int) ([]*core.Article, error) {
-	var articles []*core.Article
+func (ar *ArticleRepoDB) GetByUserID(user_id int) ([]*core.ArticleDB, error) {
+	var articles []*core.ArticleDB
 	// res := ar.db.Find(&article, "user_id = ?", user_id)
 	res := ar.db.Table("articles").
 		Joins("left join users on articles.user_id = users.id").
@@ -41,8 +41,8 @@ func (ar *ArticleRepoDB) GetByUserID(user_id int) ([]*core.Article, error) {
 	return articles, nil
 }
 
-func (ar *ArticleRepoDB) GetAll() ([]*core.Article, error) {
-	var articles []*core.Article
+func (ar *ArticleRepoDB) GetAll() ([]*core.ArticleDB, error) {
+	var articles []*core.ArticleDB
 	// res := ar.db.Find(&article)
 	res := ar.db.Table("articles").
 		Joins("left join users on articles.user_id = users.id").
