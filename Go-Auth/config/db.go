@@ -3,6 +3,7 @@ package config
 import (
 	// "fmt"
 	"fmt"
+	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -13,13 +14,18 @@ var e error
 
 func DatabaseInit() {
 
-	database, e = gorm.Open(mysql.Open("root:test@tcp(mysql-db:4444)/banking?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{})
+	for retries := 5; retries > 0; retries-- {
+		database, e = gorm.Open(mysql.Open("root:test@tcp(mysql-db:3306)/banking?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{})
 
-	if e != nil {
-		fmt.Println("Error")
-	} else {
-		fmt.Println("Success")
+		if e != nil {
+			fmt.Println("Error", e.Error())
+		} else {
+			fmt.Println("Success")
+			return
+		}
+		time.Sleep(10 * time.Second)
 	}
+
 }
 
 func AutoMigtare(model interface{}) {

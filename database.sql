@@ -1,5 +1,4 @@
 -- Create database if it does not exist
-CREATE DATABASE IF NOT EXISTS banking;
 USE banking;
 SET time_zone = '+00:00';
 

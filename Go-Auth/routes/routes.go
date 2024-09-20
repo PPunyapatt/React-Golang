@@ -28,11 +28,11 @@ func Setup(
 		AllowCredentials: true,
 	}))
 
-	e.POST("/user/login", authHandler.Login)
+	e.POST("/api/user/login", authHandler.Login)
 	e.POST("/user/signup", userHandler.Register)
 
 	// adminGroup := e.Group("/admin")
-	user := e.Group("/user")
+	user := e.Group("/api/user")
 	config := echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims {
 			return new(jwt_tkn.Claims)
